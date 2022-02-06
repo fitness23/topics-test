@@ -36,59 +36,62 @@ export default defineComponent({
         };
     },
     methods: {
-    retrieveTopics() {
+      checkParams() {
 
-        
-        console.log(this.myTopics);
-        
-    },
-    setActiveTopic(topic: TopicsDataItem){
-      this.selectedTopic = topic;
-      this.$router.push('/topics-details/'+topic.id);
-    },
-    determineSentiment(score: number){
-      if ((score > 60))
-      {
-        return "high";
+        // If the url has a param id last time we visited, then find the correct object in the arrary via the id and send to Detail component as a prop
+        if ((this.$route.params.id != null))
+        {
+          this.selectedTopic = JSON.parse(JSON.stringify(this.myTopics.topics.find(x => x.id === this.$route.params.id)));
+        }
+          
+      },
+      setActiveTopic(topic: TopicsDataItem){
+        this.selectedTopic = topic;
+        this.$router.push('/topics-details/'+topic.id);
+      },
+      determineSentiment(score: number){
+        if ((score > 60))
+        {
+          return "high";
+        }
+        else if ((score < 40))
+        {
+          return "low";
+        }
+        else
+        {
+          return "middle";
+        }
+      },
+      determineTextSize(score: number){
+        if ((score >= 83))
+        {
+          return "popularityLevel01";
+        }
+        else if ((score < 83) && (score >= 66.4))
+        {
+          return "popularityLevel02";
+        }
+        else if ((score < 66.4) && (score >= 49.8))
+        {
+          return "popularityLevel03";
+        }
+        else if ((score < 49.8) && (score >= 33.2))
+        {
+          return "popularityLevel04";
+        }
+        else if ((score < 33.2) && (score >= 16.6))
+        {
+          return "popularityLevel05";
+        }
+        else
+        {
+          return "popularityLevel06";
+        }
       }
-      else if ((score < 40))
-      {
-        return "low";
-      }
-      else
-      {
-        return "middle";
-      }
-    },
-    determineTextSize(score: number){
-      if ((score >= 83))
-      {
-        return "popularityLevel01";
-      }
-      else if ((score < 83) && (score >= 66.4))
-      {
-        return "popularityLevel02";
-      }
-      else if ((score < 66.4) && (score >= 49.8))
-      {
-        return "popularityLevel03";
-      }
-      else if ((score < 49.8) && (score >= 33.2))
-      {
-        return "popularityLevel04";
-      }
-      else if ((score < 33.2) && (score >= 16.6))
-      {
-        return "popularityLevel05";
-      }
-      else
-      {
-        return "popularityLevel06";
-      }
-    }
   },
     mounted() {
-        this.retrieveTopics();
+        this.checkParams();
     },
     setup() {
         document.title = 'Topics';
