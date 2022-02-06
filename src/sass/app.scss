@@ -1,0 +1,24 @@
+@import 'variables';
+@import 'keyframes';
+@import 'mixins';
+@import 'defaults';
+@import 'utilities';
+@import 'responsive';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--white);
+}
+
+#app {
+    text-align: left;
+    font: clamp(0.9rem, 1.5vw, 1.1rem) var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--black);
+}

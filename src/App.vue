@@ -1,0 +1,44 @@
+<template>
+    <transition name="loading">
+        <Loading v-if="loading" />
+    </transition>
+    <div class="content">
+        <router-view />
+    </div>
+    <Footer />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+import Loading from '@/components/Loading.vue';
+import Footer from '@/components/Footer.vue';
+
+export default defineComponent({
+    name: 'App',
+
+    components: { Loading, Footer },
+
+    setup() {
+        const loading = ref(true);
+
+        window.addEventListener('load', () => {
+            const body = document.querySelector('body');
+
+            loading.value = false;
+
+            if (body) body.style.overflow = 'visible';
+        });
+
+        return { loading };
+    },
+});
+</script>
+
+<style lang="scss">
+.loading-leave-active,
+.loading-leave-to {
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+</style>
